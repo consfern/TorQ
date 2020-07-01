@@ -9,7 +9,7 @@ getpartition:@[value;`getpartition;
 writedownperiodengine:@[value;`writedownperiodengine;0D01:00:00];
 
 configcsv:@[value;`.dqe.configcsv;first .proc.getconfigfile["dqengineconfig.csv"]];
-resultstab:([]procs:`$();funct:`$();table:`$();column:`$();resvalue:`long$());
+resultstab:([]procs:`$();funct:`$();table:`$();key:`$();resvalue:());
 
 /- called at every EOD by .u.end
 init:{
