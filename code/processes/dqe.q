@@ -9,7 +9,7 @@ getpartition:@[value;`getpartition;
 writedownperiodengine:@[value;`writedownperiodengine;0D01:00:00];
 
 configcsv:@[value;`.dqe.configcsv;first .proc.getconfigfile["dqengineconfig.csv"]];
-resultstab:([]procs:`$();funct:`$();table:`$();key:`$();resvalue:());
+resultstab:([]procs:`$();funct:`$();table:`$();columns:`$();resvalue:`long$());
 
 /- called at every EOD by .u.end
 init:{
@@ -28,11 +28,10 @@ init:{
   }
 
 /- update results table with results
-updresultstab:{[proc;fn;params;tab;resinput]
+updresultstab:{[proc;fn;params;column;resinput]
   .lg.o[`updresultstab;"Updating results for ",(string fn)," from proc ",string proc];
-  if[not 11h=abs type params`col; params[`col]:`];
-  `.dqe.resultstab insert (proc;fn1:last` vs fn;tab;params`col;resinput);
-  s:exec i from .dqe.resultstab where procs=proc,funct=fn1,table=tab,column=params[`col];
+  `.dqe.resultstab insert (proc;fn1:last` vs fn;params`tab;column;resinput);
+  s:exec i from .dqe.resultstab where procs=proc,funct=fn1,table=param`tab,columns=column;
   .dqe.tosavedown[`.dqe.resultstab],:s;
   }
 
